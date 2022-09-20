@@ -19,7 +19,7 @@ function ClearAll(e) {
 }
 
 console.log(value1);
-<efgrhtygfd></efgrhtygfd>
+
 
 
 
