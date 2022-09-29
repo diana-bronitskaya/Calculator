@@ -1,25 +1,95 @@
-let value1 = '';
-let value2 = '';
+let value1 = "";
+let value2 = "";
 let sign = '';
+let finish = false;
 
 let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-let operation = ['+', '-', 'X', '/', '+/-', '%'];
+let operation = ['+', '-', 'X', '/'];
 
-const output = document.querySelector('input'); 
+const output = document.querySelector(".output"); 
+output.addEventListener("click", function() {
+    if(output.value == "0")
+    output.value = "";
+})
 
+// получаем нажатую кнопку
 let btn = document.querySelector('.numbers');
+btn.addEventListener("click", GetNumber);
 
-// document.querySelector('.AC').onclick = ClearAll;
-// let x = document.querySelector(".AC");
-// x.addEventListener('click', ClearAll);
-
+// кнопка АС
 document.querySelector(".AC").addEventListener("click", ClearAll);
-function ClearAll(e) {
-    console.log('e.target.innerText');
+function ClearAll() {
+    value1 = "";
+    value2 = "";
+    output.value = "0";
 }
 
-console.log(value1);
 
+function GetNumber(event) {
+// очистить от 0
+if(output.value == "0" || output.value == "AC") output.value = "";
+// кнопка АС
+if(event.target.textContent == "AC") {
+    ClearAll(); 
 
+}
+const key = event.target.textContent;
 
+// нажатие кнопки
+    if(numbers.includes(key)) {
+      if(value2 == "" && sign == "") {
+      value1 += key;
+      console.log(value1);
+      output.value = value1;
+      console.log(value1, sign, value2);
+      }
 
+      else if(value1 !== "" && value2 !== "" && finish) {
+      value2 == (+key);
+      finish = false;
+      output.value = value2;
+      console.log(value1, sign, value2);
+      }
+      else {
+      value2 += (+key);
+      output.value = value2;
+      }
+      console.log(value1, sign, value2);
+      return;
+    }
+    
+    if(operation.includes(key)) {
+            sign = key;
+            output.value = key;
+            console.log(value1, sign, value2);
+            return;
+    }
+// нажата =
+    if (key === '=') {
+      if(value2 === "") value2 = value1;
+      switch(sign) {
+        case "+":
+            value1 = (+value1) + (+value2);
+            break;
+        case "-":
+            value1 = value1 - value2;
+            break;
+        case "X":
+            value1 = value1 * value2;
+            break;
+        case "/":
+            if(value2 == "0") {
+                output.value = "Error";
+                value1 = "";
+                value2 = "";
+                sign = "";
+                return;
+            }
+            value1 = value1 / value2;
+            break;
+      }
+      finish = true;
+      output.value = (+value1);
+      console.log(value1);
+    }
+}
