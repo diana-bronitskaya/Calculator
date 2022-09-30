@@ -83,6 +83,9 @@ margin-left: 10px;
     .calculator {
     width: 45%;
     }
+    .calculator input {
+        width: 60%;
+    }
 }
 @media (max-width: 700px) {
     .calculator {
