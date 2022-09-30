@@ -3,7 +3,7 @@ let value2 = "";
 let sign = '';
 let finish = false;
 
-let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+let numbers = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '.'];
 let operation = ['+', '-', 'X', '/'];
 
 const output = document.querySelector(".output"); 
@@ -21,7 +21,9 @@ document.querySelector(".AC").addEventListener("click", ClearAll);
 function ClearAll() {
     value1 = "";
     value2 = "";
+    sign = ""
     output.value = "0";
+    finish = false;
 }
 
 
@@ -44,18 +46,32 @@ const key = event.target.textContent;
       console.log(value1, sign, value2);
       }
 
+
       else if(value1 !== "" && value2 !== "" && finish) {
-      value2 == (+key);
+      value2 = key;
       finish = false;
       output.value = value2;
       console.log(value1, sign, value2);
       }
       else {
-      value2 += (+key);
+      value2 += key;
       output.value = value2;
       }
       console.log(value1, sign, value2);
       return;
+    }
+
+
+    if(key === '+/-') {
+        if(output.value == value1) {
+        value1 = -value1;
+        output.value = value1;
+        } 
+        if(output.value == value2) {
+        value2 = -value2;
+        output.value = value2;
+        }
+
     }
     
     if(operation.includes(key)) {
@@ -64,6 +80,21 @@ const key = event.target.textContent;
             console.log(value1, sign, value2);
             return;
     }
+
+    if(key === "%") {
+        if(value2 !== "") {
+        value2 = value1/100*value2;
+        output.value = value2;
+        } 
+        if(value2 == "") {
+        value1 = value1/100;
+        output.value = value1;
+        } 
+
+    }
+    
+        
+ 
 // нажата =
     if (key === '=') {
       if(value2 === "") value2 = value1;
@@ -91,5 +122,6 @@ const key = event.target.textContent;
       finish = true;
       output.value = (+value1);
       console.log(value1);
+
     }
 }
